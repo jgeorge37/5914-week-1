@@ -22,7 +22,15 @@ def run_example(language_translator):
         model_id='en-es').get_result()
     print(json.dumps(translation, indent=2, ensure_ascii=False))
 
+def read_input():
+    pass
+
+def do_quiz(language_translator):
+    pass
+
 if __name__ == "__main__":
     translator = setup_translator()
     run_example(translator)
+    # read_input()
+    # do_quiz(translator)
 
