@@ -57,7 +57,7 @@ def read_input():
         try:
             user_input_number = int(user_input)
             if 0 < user_input_number <= len(model_ids):
-                picked_model_id = user_input_number
+                picked_model_id = model_ids[user_input_number-1]
             else:
                 raise Exception()
         except:
@@ -70,13 +70,12 @@ def read_input():
     return words, picked_model_id
 
 
-def do_quiz(language_translator, words):
-    # pick word and 
+def do_quiz(language_translator, words, model):
     while True:
         words_copy = words[:]
         picked_word = random.choice(words_copy)
         original_word = picked_word
-        response = language_translator.translate(text=picked_word, model_id='en-es').get_result()
+        response = language_translator.translate(text=picked_word, model_id=model).get_result()
         translated_word = response['translations'][0]['translation']
 
         # get possible answers
@@ -93,8 +92,8 @@ def do_quiz(language_translator, words):
         random.shuffle(choices)
         print(choices)
 
-        print("One word was randomly chosen from your vocab words and translated to Spanish." +
-        "The translated word is: "  + translated_word + ". What is this word in English?")
+        print("One word was randomly chosen from your vocab words and translated to "+ ModelIds(model).name  +
+        ". The translated word is: "  + translated_word + ". What is this word in English?")
         for i in range(4):
             print(str(i+1) + ") " + choices[i])
         user_choice = int(input())
@@ -117,6 +116,6 @@ def do_quiz(language_translator, words):
 if __name__ == "__main__":
     translator = setup_translator()
     #run_example(translator)
-    words = read_input()
-    do_quiz(translator, words)
+    words, model = read_input()
+    do_quiz(translator, words, model)
 
