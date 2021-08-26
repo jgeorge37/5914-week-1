@@ -23,14 +23,17 @@ def run_example(language_translator):
     print(json.dumps(translation, indent=2, ensure_ascii=False))
 
 def read_input():
-    pass
+    print("Enter your vocab words as a space-separated list:")
+    user_input = input()
+    words = user_input.split(" ")
+    return words
 
-def do_quiz(language_translator):
+def do_quiz(language_translator, words):
     pass
 
 if __name__ == "__main__":
     translator = setup_translator()
-    run_example(translator)
-    # read_input()
-    # do_quiz(translator)
+    # run_example(translator)
+    words = read_input()
+    do_quiz(translator, words)
 
