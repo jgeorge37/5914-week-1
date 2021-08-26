@@ -68,10 +68,6 @@ def do_quiz(language_translator, words):
         print("Correct")
         quit = input("Would you like to quit (y/n)?")
         if(quit == 'y'): break
-        
-    
-    
-    
 
 
 
