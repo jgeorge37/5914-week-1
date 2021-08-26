@@ -16,6 +16,12 @@ def setup_translator():
     language_translator.set_service_url('https://api.us-east.language-translator.watson.cloud.ibm.com')
     return language_translator
 
+def get_languages(language_translator):
+    response = language_translator.list_models().get_result()['models']
+    model_ids = [x['model_id'] for x in response]
+    print(model_ids)
+    #print(json.dumps(response, indent=2, ensure_ascii=False))
+
     
 def run_example(language_translator):
     translation = language_translator.translate(
@@ -37,14 +43,14 @@ def read_input():
 def do_quiz(language_translator, words):
     def do_question():
         # pick word and translate
+        words_copy = words[:]
         picked_word = random.choice(words_copy)
-        response = language_translator.translate(text=picked_word, model_id='en_us').get_result()
+        response = language_translator.translate(text=picked_word, model_id='en_es').get_result()
         translated_word = response['translations'][0]['translation']
 
         # get possible answers
         choices = []
         choices.append(picked_word)
-        words_copy = words[:]
         words_copy.remove(picked_word)
 
         for _ in range(3):
@@ -57,7 +63,7 @@ def do_quiz(language_translator, words):
 
 
 
-    if len(words < 4):
+    if len(words) < 4:
         print("Not enough words - minimum of 4 - exiting")
         return
     
@@ -66,7 +72,8 @@ def do_quiz(language_translator, words):
         
 if __name__ == "__main__":
     translator = setup_translator()
-    run_example(translator)
-    #words = read_input()
-    #do_quiz(translator, words)
+    #run_example(translator)
+    # get_languages(translator)
+    words = read_input()
+    do_quiz(translator, words)
 
